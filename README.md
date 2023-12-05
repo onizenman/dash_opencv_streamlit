@@ -1,2 +1,2 @@
-# dash_opencv_streamlit
-Example to use OpenCV and Streamlit
+
+# Face Detection using OpenCV and Streamlit
