@@ -5,18 +5,18 @@ from PIL import Image
 from io import BytesIO
 import base64
 
-# Create application title and file uploader widget.
-st.title("OpenCV Deep Learning based Face Detection")
-img_file_buffer = st.file_uploader("Choose a file", type=['jpg', 'jpeg', 'png'])
+# Crear el título de la aplicación y un widget oara carcar un archivo.
+st.title("Detección de rostros basados en aprendizaje profundo")
+img_file_buffer = st.file_uploader("Cargar imagen", type=['jpg', 'jpeg', 'png'])
 
 
-# Function for detecting facses in an image.
+# Función para detectar rostros en una imagen.
 def detectFaceOpenCVDnn(net, frame):
-    # Create a blob from the image and apply some pre-processing.
+    # Crear un blob  de la imagen y aplicar un pre-procesamiento.
     blob = cv2.dnn.blobFromImage(frame, 1.0, (300, 300), [104, 117, 123], False, False)
-    # Set the blob as input to the model.
+    # Pasar el blob al modelo.
     net.setInput(blob)
-    # Get Detections.
+    # Obtener la detección.
     detections = net.forward()
     return detections
 
@@ -37,7 +37,7 @@ def process_detections(frame, detections, conf_threshold=0.5):
             bboxes.append([x1, y1, x2, y2])
             bb_line_thickness = max(1, int(round(frame_h / 200)))
             # Draw bounding boxes around detected faces.
-            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), bb_line_thickness, cv2.LINE_8)
+            cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 0, 255), bb_line_thickness, cv2.LINE_8)
     return frame, bboxes
 
 
@@ -74,10 +74,10 @@ if img_file_buffer is not None:
     placeholders = st.columns(2)
     # Display Input image in the first placeholder.
     placeholders[0].image(image, channels='BGR')
-    placeholders[0].text("Input Image")
+    placeholders[0].text("Imagen proporcionada")
 
     # Create a Slider and get the threshold from the slider.
-    conf_threshold = st.slider("SET Confidence Threshold", min_value=0.0, max_value=1.0, step=.01, value=0.5)
+    conf_threshold = st.slider("Define el umbral (Threshold)", min_value=0.0, max_value=1.0, step=.01, value=0.5)
 
     # Call the face detection model to detect faces in the image.
     detections = detectFaceOpenCVDnn(net, image)
@@ -87,10 +87,10 @@ if img_file_buffer is not None:
 
     # Display Detected faces.
     placeholders[1].image(out_image, channels='BGR')
-    placeholders[1].text("Output Image")
+    placeholders[1].text("Imagen resultante")
 
     # Convert opencv image to PIL.
     out_image = Image.fromarray(out_image[:, :, ::-1])
     # Create a link for downloading the output file.
-    st.markdown(get_image_download_link(out_image, "face_output.jpg", 'Download Output Image'),
+    st.markdown(get_image_download_link(out_image, "face_output.jpg", 'Descarga la imagen'),
                 unsafe_allow_html=True)
