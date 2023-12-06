@@ -5,6 +5,15 @@ from PIL import Image
 from io import BytesIO
 import base64
 
+hide_github_icon = """
+#GithubIcon {
+  visibility: hidden;
+}
+"""
+st.markdown(hide_github_icon, unsafe_allow_html=True)
+
+
+
 # Crear el título de la aplicación y un widget oara carcar un archivo.
 st.title("Detección de rostros basados en aprendizaje profundo")
 img_file_buffer = st.file_uploader("Cargar imagen", type=['jpg', 'jpeg', 'png'])
