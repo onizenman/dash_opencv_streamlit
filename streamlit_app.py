@@ -52,7 +52,8 @@ def process_detections(frame, detections, conf_threshold=0.5):
 
 
 # Function to load the DNN model.
-@st.cache(allow_output_mutation=True)
+# @st.cache(allow_output_mutation=True)
+@st.cache_resource
 def load_model():
     modelFile = "res10_300x300_ssd_iter_140000_fp16.caffemodel"
     configFile = "deploy.prototxt"
