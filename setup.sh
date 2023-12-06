@@ -5,5 +5,7 @@ headless = true\n
 enableCORS=false\n
 enableXsrfProtection=false\n
 port = $PORT\n
+[browser]\n
+gatherUsageStats = true\n
 \n
 " > ~/.streamlit/config.toml
